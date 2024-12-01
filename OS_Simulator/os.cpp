@@ -8,12 +8,12 @@
 
 
 // Main function
-int os(){
+int main(){
 
     cout << "started" << endl;
     ProcessManagement processMgmt(Scheduler(Processor(), FIFO));
     cout << "declaring variables" << endl;
-    long time = 1;
+    long time = 0;
     long sleepDuration = 50;
     string file = "./procListNoIo.txt";
     stringstream ss;
@@ -21,11 +21,10 @@ int os(){
     processMgmt.readProcessFile(file);
     cout << "reading complete" << endl;
     processMgmt.printPending();
-    time = 0;
-    long unsigned int totalCompleted = 0;
+    int processesRemaining = processMgmt.numProcesses();
     cout << "Starting loop \n" << endl;
     //keep running the loop until all processes have been added and have run to completion
-    while(!processMgmt.processingComplete()){
+    while(processesRemaining > 0){
         // cout << "iteration" << endl;
         //Update our current time step
         ++time;
@@ -35,6 +34,9 @@ int os(){
         //run a step
         // cout << "running step" << endl;
         stepActionEnum stepAction = processMgmt.runStep();
+        if(stepAction == complete){
+            processesRemaining--;
+        }
 
         // cout << "starting display" << endl;
         // All terminal visuals

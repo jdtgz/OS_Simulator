@@ -10,14 +10,14 @@ class Processor{
         Processor() {};
 
         // Essential class functions
-        void newProcess(Process p);
+        void newProcess(Process* p);
         bool runProcess();
-        Process checkProcess() {return m_process;}
+        Process checkProcess() {return *m_process;}
         bool isFree() {return free;}
 
     private:
         // Each processor holds one process at a time
-        Process m_process = Process();
+        Process* m_process = nullptr;
         // Shows whether the processor is free to admit a new process or not
         bool free = true;
 };

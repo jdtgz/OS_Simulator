@@ -1,7 +1,7 @@
 #ifndef PROCESS_MGMT_H
 #define PROCESS_MGMT_H
 
-#include<algorithm>  // Needed for sort (used in readProcessFile)
+#include <algorithm>  // Needed for sort (used in readProcessFile)
 #include "scheduler.h"
 
 
@@ -18,19 +18,19 @@ class ProcessManagement{
 
         // Essential class functions
         void activateProcesses(const int& time);
-        bool processingComplete() {return (m_pending.size() == 0 && m_scheduler.schedulerEmpty());}
         stepActionEnum runStep();
+        int numProcesses() {return allProcesses.size();}
 
         // Debugging helper
         void printStates();
         void printPending();
 
-        // Temporarily used to move all processes from a file into the m_pending vector
+        // Temporarily used to move all processes from a file into the allProcesses vector
         // Will need to be rewritten depending on how processes are inputted by the user
         void readProcessFile(const string& fname);
     private:
-        // Holds all processes before their respective arrival times
-        vector<Process> m_pending;
+        // Holds all processes
+        vector<Process> allProcesses;
         // The scheduler to be used during simulation
         Scheduler m_scheduler;
 };

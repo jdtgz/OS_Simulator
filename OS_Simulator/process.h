@@ -11,12 +11,12 @@ using namespace std;
 
 
 // State of the process
-enum State { ready, processing, blocked, newArrival, done };
+enum State { ready, processing, blocked, newArrival, done, awaiting };
 
 
 // Process struct
 struct Process{
-    Process() : id(999999), arrivalTime(-1), doneTime(-1), reqProcessorTime(0), processorTime(0), state(newArrival) {}
+    Process() : id(999999), arrivalTime(-1), doneTime(-1), reqProcessorTime(0), processorTime(0), state(awaiting) {}
 
     // Essential struct values
     unsigned int id;
@@ -30,10 +30,11 @@ struct Process{
     void printProcess(){
         cout << setw(5) << id << " |";
         cout << setw(2) << arrivalTime << " |";
-        cout << setw(3) << doneTime << " |";
-        cout << setw(5) << reqProcessorTime << " |";
+        cout << setw(5) << doneTime << " |";
+        cout << setw(3) << reqProcessorTime << " |";
         cout << setw(3) << processorTime << " |"; 
         cout << setw(2) << state << " |";
+        cout << setw(3) << (((doneTime-arrivalTime) + processorTime)/reqProcessorTime) << " |";
         cout << endl;
     }
 };
