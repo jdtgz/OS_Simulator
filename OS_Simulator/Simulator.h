@@ -5,6 +5,8 @@
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include "DropMenu.h"
+
 #pragma once
 class Simulator
 {
@@ -26,14 +28,8 @@ class Simulator
 		// Render the visuals 
 		void render(); 
 
-		// run a popUp window
-		void runPopUp(sf::RenderWindow&);
-
 		// Main window 
 		sf::RenderWindow* window;
-		sf::RenderWindow* menu1; 
-
-		// Testing window obj
-		sf::RectangleShape popUp;
+		std::vector<DropMenu> menus;
 };
 
