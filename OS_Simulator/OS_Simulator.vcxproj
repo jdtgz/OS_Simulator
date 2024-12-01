@@ -140,24 +140,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DropMenu.cpp" />
-    <ClCompile Include="os.cpp" />
     <ClCompile Include="OS_Simulator.cpp" />
-    <ClCompile Include="process.cpp" />
-    <ClCompile Include="processMgmt.cpp" />
-    <ClCompile Include="processor.cpp" />
-    <ClCompile Include="scheduler.cpp" />
     <ClCompile Include="Simulator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DropMenu.h" />
-    <ClInclude Include="process.h" />
-    <ClInclude Include="processMgmt.h" />
-    <ClInclude Include="processor.h" />
-    <ClInclude Include="scheduler.h" />
     <ClInclude Include="Simulator.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="procListNoIo.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
