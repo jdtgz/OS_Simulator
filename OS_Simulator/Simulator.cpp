@@ -6,11 +6,18 @@ Simulator::Simulator()
     window = new sf::RenderWindow(sf::VideoMode(1000, 1000), "Scheduling Simulator",
         sf::Style::Titlebar | sf::Style::Close);
 
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 1; i++)
     {
-        menus.push_back(DropMenu(5, sf::Vector2f(10.f + (i * 150.f), 10.f)));
+        menus.push_back(DropMenu(4, sf::Vector2f(10.f + (i * 150.f), 10.f)));
+        menus[i].setMainTitle("Menu " + std::to_string(i + 1));
     }
+    std::vector<std::string> dropMenus;
+    dropMenus.push_back("FIFO");
+    dropMenus.push_back("RoundRobin");
+    dropMenus.push_back("SJN");
+    dropMenus.push_back("SRT");
 
+    menus[0].setOptionNames(dropMenus);
 }
 
 
@@ -57,8 +64,10 @@ void Simulator::render()
 {
     window->clear(sf::Color(105,105,105));
 
-    for(auto& x : menus)
-        x.showMenu(window);
+    for (auto& x : menus)
+    {
+        x.showMenu(*window);
+    }
 
     window->display();
 }

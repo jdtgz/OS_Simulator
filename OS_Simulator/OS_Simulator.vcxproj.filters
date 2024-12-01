@@ -24,21 +24,6 @@
     <ClCompile Include="DropMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="os.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="process.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="processMgmt.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="processor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="scheduler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Simulator.h">
@@ -47,20 +32,13 @@
     <ClInclude Include="DropMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="process.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="processMgmt.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="processor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="scheduler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="procListNoIo.txt" />
+    <Font Include="Montserrat-Regular.ttf">
+      <Filter>Header Files</Filter>
+    </Font>
+    <Font Include="Montserrat-Bold.ttf">
+      <Filter>Header Files</Filter>
+    </Font>
   </ItemGroup>
 </Project>

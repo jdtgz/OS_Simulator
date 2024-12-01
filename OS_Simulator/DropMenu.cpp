@@ -1,12 +1,9 @@
 #include "DropMenu.h"
 
+
 DropMenu::DropMenu()
 {
 	active = false;
-
-	menu.setSize(sf::Vector2f(0.f, 0.f));
-	menu.setFillColor(sf::Color::Transparent);
-	menu.setPosition(0,0);
 }
 
 
@@ -14,14 +11,19 @@ DropMenu::DropMenu(int dropdowns, sf::Vector2f pos)
 {
 	active = false; 
 
+	font.loadFromFile("./Montserrat-Regular.ttf");
+
 	menu.setSize(sf::Vector2f(150.f, 25.f));
 	menu.setFillColor(sf::Color(0,0,0));
 	menu.setOutlineThickness(-2);
 	menu.setOutlineColor(sf::Color::Transparent);	
 	menu.setPosition(pos);
 
+	menuTitle = "Menu";
+
 	for (int i = 0; i < dropdowns; i++)
 	{
+		// Initialize all boxes
 		options.push_back(sf::RectangleShape(sf::Vector2f(150.f, 50.f)));
 		options[i].setFillColor(sf::Color::Transparent);
 
@@ -32,7 +34,13 @@ DropMenu::DropMenu(int dropdowns, sf::Vector2f pos)
 
 		options[i].setOutlineThickness(-2);
 		options[i].setOutlineColor(sf::Color::Transparent);
+
+
+		// Initialize all box labels for options 
+		labels.push_back(std::to_string(i + 1));
 	}
+
+	
 }
 
 
@@ -57,18 +65,42 @@ void DropMenu::deactivateMenu()
 }
 
 
-void DropMenu::showMenu(sf::RenderWindow* window)
+void DropMenu::setMainTitle(std::string mainTitle)
 {
-	window->draw(menu);
-	if(active)
-		for (auto& x : options)
-			window->draw(x);
+	menuTitle = mainTitle;
 }
 
 
-sf::RectangleShape DropMenu::getMenu()
+void DropMenu::setOptionNames(std::vector<std::string> names)
 {
-	return menu;
+	for (int i = 0; i < names.size(); i++)
+	{
+		labels[i] = names[i];
+	}
+}
+
+
+void DropMenu::showMenu(sf::RenderWindow& window)
+{	
+	window.draw(menu);
+	
+	if (active)
+	{
+		for (int i = 0; i < options.size(); i++)
+		{
+			window.draw(options[i]);
+
+			sf::Text tmp(labels[i], font, 15);
+			tmp.setOrigin(tmp.getGlobalBounds().width / 2, tmp.getGlobalBounds().height / 2);
+			tmp.setPosition(options[i].getPosition().x + 75, options[i].getPosition().y + 22.5);
+			window.draw(tmp);
+		} 
+	}
+
+	sf::Text title(menuTitle, font, 15);
+	title.setOrigin(title.getGlobalBounds().width / 2, title.getGlobalBounds().height / 2);
+	title.setPosition(menu.getPosition().x + 75, menu.getPosition().y + 10);
+	window.draw(title);
 }
 
 

@@ -147,6 +147,10 @@
     <ClInclude Include="DropMenu.h" />
     <ClInclude Include="Simulator.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Font Include="Montserrat-Bold.ttf" />
+    <Font Include="Montserrat-Regular.ttf" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
