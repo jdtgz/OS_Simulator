@@ -14,13 +14,13 @@ int main(){
     ProcessManagement processMgmt(Scheduler(Processor(), FIFO));
     cout << "declaring variables" << endl;
     long time = 0;
-    long sleepDuration = 50;
+    long sleepDuration = 10;
     string file = "./procListNoIo.txt";
     stringstream ss;
     cout << "reading process file" << endl;
     processMgmt.readProcessFile(file);
     cout << "reading complete" << endl;
-    processMgmt.printPending();
+    processMgmt.printAllProcesses();
     int processesRemaining = processMgmt.numProcesses();
     cout << "Starting loop \n" << endl;
     //keep running the loop until all processes have been added and have run to completion
@@ -33,7 +33,7 @@ int main(){
         processMgmt.activateProcesses(time);
         //run a step
         // cout << "running step" << endl;
-        stepActionEnum stepAction = processMgmt.runStep();
+        stepActionEnum stepAction = processMgmt.runStep(time);
         if(stepAction == complete){
             processesRemaining--;
         }
@@ -72,5 +72,6 @@ int main(){
         this_thread::sleep_for(chrono::milliseconds(sleepDuration));
     }
     cout << "loop complete" << endl;
+    processMgmt.printAllProcesses();
     return 0;
 }

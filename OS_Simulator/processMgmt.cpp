@@ -12,9 +12,9 @@ void ProcessManagement::activateProcesses(const int& time){
 }
 
 // Runs at each time step
-stepActionEnum ProcessManagement::runStep(){
+stepActionEnum ProcessManagement::runStep(const long& time){
     // cout << "processMngmt layer starting" << endl;
-    return m_scheduler.runProcesses();
+    return m_scheduler.runProcesses(time);
     // cout << "processMngmt layer complete" << endl;
 }
 
@@ -50,7 +50,7 @@ void ProcessManagement::printStates(){
 }
 
 // For debugging only
-void ProcessManagement::printPending(){
+void ProcessManagement::printAllProcesses(){
     for(auto proc : allProcesses){
         proc.printProcess();
     }

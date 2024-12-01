@@ -12,7 +12,7 @@ void Scheduler::addNewProcess(){
 }
 
 // Decides what happens at each time interval. Returns step action documenting what happened.
-stepActionEnum Scheduler::runProcesses(){
+stepActionEnum Scheduler::runProcesses(const long& time){
     // cout << "scheduler layer started" << endl;
     if(new_processes.size() > 0){
         // cout << "admit new process" << endl;
@@ -36,7 +36,7 @@ stepActionEnum Scheduler::runProcesses(){
 
     } else {
         // cout << "processor not free" << endl;
-        bool processCompleted = m_processor.runProcess();
+        bool processCompleted = m_processor.runProcess(time);
         if(processCompleted){
             return complete;
         } else {

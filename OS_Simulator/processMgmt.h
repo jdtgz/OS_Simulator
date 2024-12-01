@@ -18,12 +18,12 @@ class ProcessManagement{
 
         // Essential class functions
         void activateProcesses(const int& time);
-        stepActionEnum runStep();
+        stepActionEnum runStep(const long& time);
         int numProcesses() {return allProcesses.size();}
 
         // Debugging helper
         void printStates();
-        void printPending();
+        void printAllProcesses();
 
         // Temporarily used to move all processes from a file into the allProcesses vector
         // Will need to be rewritten depending on how processes are inputted by the user

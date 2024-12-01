@@ -18,18 +18,16 @@ class Scheduler{
         // Essential class functions
         void addNewArrival(Process* p);
         void addNewProcess();
-        stepActionEnum runProcesses();
+        stepActionEnum runProcesses(const long& time);
+
+    private:
+        // For later use
+        Alg m_algorithm = FIFO;
 
         // New processes admitted by process management
         list<Process*> new_processes;
         // All processes in sorted order to feed to the processor. Essentially the ready queue
         list<Process*> m_processes;
-    private:
-        // For later use
-        Alg m_algorithm = FIFO;
-
-        
-        
         // The scheduler is linked to a processor. May change to have multiple processors
         Processor m_processor;
 };
