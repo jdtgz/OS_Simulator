@@ -29,16 +29,12 @@ struct Process{
     // Debugging helper
     void printProcess(){
         cout << setw(5) << id << " |";
-        cout << setw(2) << arrivalTime << " |";
+        cout << setw(5) << arrivalTime << " |";
         cout << setw(5) << doneTime << " |";
-        cout << setw(3) << reqProcessorTime << " |";
-        cout << setw(3) << processorTime << " |"; 
+        cout << setw(5) << reqProcessorTime << " |";
+        cout << setw(5) << processorTime << " |"; 
         cout << setw(2) << state << " |";
-        cout << setw(3) << (((doneTime-arrivalTime) + processorTime)/reqProcessorTime) << " |";
+        cout << setw(5) << (((doneTime-arrivalTime) + processorTime)/reqProcessorTime) << " |";
         cout << endl;
     }
 };
-
-
-// Print all information about all processes from a vector (debugging helper)
-void printProcessSet(vector<Process>& processVector);

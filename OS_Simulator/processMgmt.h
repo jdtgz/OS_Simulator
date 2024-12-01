@@ -14,7 +14,7 @@ inline bool procComp(const Process& p1, const Process& p2){
 // Admits new processes into the scheduler at arrival time
 class ProcessManagement{
     public:
-        ProcessManagement(Scheduler mScheduler) : m_scheduler(mScheduler) {};
+        ProcessManagement(Scheduler* mScheduler) : m_scheduler(mScheduler) {};
 
         // Essential class functions
         void activateProcesses(const int& time);
@@ -24,6 +24,7 @@ class ProcessManagement{
         // Debugging helper
         void printStates();
         void printAllProcesses();
+        void printScheduler();
 
         // Temporarily used to move all processes from a file into the allProcesses vector
         // Will need to be rewritten depending on how processes are inputted by the user
@@ -32,7 +33,7 @@ class ProcessManagement{
         // Holds all processes
         vector<Process> allProcesses;
         // The scheduler to be used during simulation
-        Scheduler m_scheduler;
+        Scheduler* m_scheduler;
 };
 
 

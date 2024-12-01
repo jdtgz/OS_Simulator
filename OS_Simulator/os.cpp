@@ -11,17 +11,24 @@
 int main(){
 
     cout << "started" << endl;
-    ProcessManagement processMgmt(Scheduler(Processor(), FIFO));
+    //creating processMgmt object with chosen scheduler
+    Alg algorithmChoice = SJN;
+    ProcessManagement processMgmt = ProcessManagement(Factory::createAlgorithm(algorithmChoice, Processor()));
+    processMgmt.printScheduler();
+
     cout << "declaring variables" << endl;
     long time = 0;
-    long sleepDuration = 10;
+    long sleepDuration = 0;
     string file = "./procListNoIo.txt";
     stringstream ss;
+
+    //filling all processes
     cout << "reading process file" << endl;
     processMgmt.readProcessFile(file);
     cout << "reading complete" << endl;
     processMgmt.printAllProcesses();
     int processesRemaining = processMgmt.numProcesses();
+
     cout << "Starting loop \n" << endl;
     //keep running the loop until all processes have been added and have run to completion
     while(processesRemaining > 0){
@@ -66,6 +73,7 @@ int main(){
         }
         // cout << "printing states" << endl;
         processMgmt.printStates();
+        // processMgmt.printScheduler();
 
         // Sleep
         // cout << "sleeping" << endl;

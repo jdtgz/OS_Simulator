@@ -5,7 +5,7 @@ void ProcessManagement::activateProcesses(const int& time){
     static int iter = allProcesses.size()-1;
     if(iter > 0){
         while(allProcesses[iter].arrivalTime == time){
-            m_scheduler.addNewArrival(&allProcesses[iter]);
+            m_scheduler->addNewArrival(&allProcesses[iter]);
             iter--;
         }
     }
@@ -14,17 +14,15 @@ void ProcessManagement::activateProcesses(const int& time){
 // Runs at each time step
 stepActionEnum ProcessManagement::runStep(const long& time){
     // cout << "processMngmt layer starting" << endl;
-    return m_scheduler.runProcesses(time);
+    return m_scheduler->runProcesses(time);
     // cout << "processMngmt layer complete" << endl;
 }
 
 // For debugging only
 void ProcessManagement::printStates(){
     char stateChar;
-    for(auto & Proc : allProcesses)
-    {
-        switch (Proc.state)
-        {
+    for(auto & Proc : allProcesses){
+        switch (Proc.state){
             case ready:
                 stateChar = 'r';
                 break;
@@ -51,9 +49,17 @@ void ProcessManagement::printStates(){
 
 // For debugging only
 void ProcessManagement::printAllProcesses(){
-    for(auto proc : allProcesses){
+    cout << "   ID |   AT |   DT | RQPT |   PT | S |  Eff |" << endl;
+    for(auto & proc : allProcesses){
         proc.printProcess();
     }
+    cout << endl;
+}
+
+//For debugging only
+void ProcessManagement::printScheduler(){
+    m_scheduler->print();
+    m_scheduler->printReadyProcesses();
 }
 
 // Moves all processes from a file into the allProcesses vector
@@ -62,7 +68,7 @@ void ProcessManagement::readProcessFile(const string& fname){
     ifstream in(fname.c_str());
     string line, strItem;
     Process proc;
-    unsigned int ioIDctrl(0), procIDctrl(0);
+    unsigned int ioIDctrl(1), procIDctrl(1);
     int ioTime, ioDur;
 
     allProcesses.clear();

@@ -8,6 +8,7 @@ void Scheduler::addNewArrival(Process* p){
 
 // Adds and sorts a process into the ready queue
 void Scheduler::addNewProcess(){
+    // cout << "FIFO adding new process" << endl;
     m_processes.push_back(new_processes.front());
 }
 
@@ -26,6 +27,7 @@ stepActionEnum Scheduler::runProcesses(const long& time){
         if(m_processes.size() != 0){
             // cout << "beginning a run" << endl;
             m_processor.newProcess(m_processes.front());
+            m_processes.front()->state = processing;
             m_processes.front() = nullptr;
             m_processes.pop_front();
             return beginRun;
@@ -43,4 +45,11 @@ stepActionEnum Scheduler::runProcesses(const long& time){
             return continueRun;
         }
     }
+}
+
+void Scheduler::printReadyProcesses(){
+    for(const auto& proc : m_processes){
+        cout << proc->id << " ";
+    }
+    cout << endl;
 }
