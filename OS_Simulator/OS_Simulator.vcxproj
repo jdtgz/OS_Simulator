@@ -139,13 +139,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CentralProcessor.cpp" />
     <ClCompile Include="DropMenu.cpp" />
     <ClCompile Include="OS_Simulator.cpp" />
+    <ClCompile Include="Process.cpp" />
+    <ClCompile Include="ProjectManagement.cpp" />
+    <ClCompile Include="Scheduler.cpp" />
     <ClCompile Include="Simulator.cpp" />
     <ClCompile Include="VisualScheduler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CentralProcessor.h" />
     <ClInclude Include="DropMenu.h" />
+    <ClInclude Include="Process.h" />
+    <ClInclude Include="ProjectManagement.h" />
+    <ClInclude Include="Scheduler.h" />
     <ClInclude Include="Simulator.h" />
     <ClInclude Include="VisualScheduler.h" />
   </ItemGroup>

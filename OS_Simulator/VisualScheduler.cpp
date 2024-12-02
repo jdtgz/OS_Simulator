@@ -3,7 +3,6 @@
 
 VisualScheduler::VisualScheduler()
 {
-   
 }
 
 
