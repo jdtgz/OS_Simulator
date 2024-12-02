@@ -3,9 +3,8 @@
  * Will handle window and juggle visual/implented features 
  */
 
-#include <iostream>
 #include <SFML/Graphics.hpp>
-#include "DropMenu.h"
+#include "VisualScheduler.h"
 
 #pragma once
 class Simulator
@@ -28,8 +27,11 @@ class Simulator
 		// Render the visuals 
 		void render(); 
 
-		// Main window 
+		// Main window and its attributes
 		sf::RenderWindow* window;
-		std::vector<DropMenu> menus;
+		sf::Vector2f windowSize;
+		
+		// Handles all the visuals necessary for simulation of OS scheduling
+		VisualScheduler* scheduleVisuals;
 };
 

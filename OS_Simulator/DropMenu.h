@@ -1,6 +1,7 @@
 /*
  * DropMenu class provides a general structure for creating any sort of drop menus
  */
+
 #include <iostream>
 #include "SFML/Graphics.hpp"
 
@@ -25,6 +26,7 @@ class DropMenu
 		// Change the title of the main menu
 		void setMainTitle(std::string mainTitle); 
 
+		// Change the titles of the drop menu options
 		void setOptionNames(std::vector<std::string> names);
 
 		// Draws the menu onto a window

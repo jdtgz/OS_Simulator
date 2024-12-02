@@ -120,9 +120,9 @@ void DropMenu::handleInput(sf::Vector2f pos)
 		menu.setFillColor(sf::Color(0,0,0,125));
 
 		// check for input and activate drop menu accordingly
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !active)
 			activateMenu();
-		else if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
+		else if(sf::Mouse::isButtonPressed(sf::Mouse::Left) && active)
 			deactivateMenu();
 	}
 	else
@@ -141,8 +141,11 @@ void DropMenu::handleInput(sf::Vector2f pos)
 			options[i].setOutlineColor(sf::Color::White);
 			options[i].setFillColor(sf::Color(0, 0, 0, 125));
 
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			{
 				std::cout << "Box: " << i << std::endl;
+				active = false;
+			}
 		}
 		else
 		{

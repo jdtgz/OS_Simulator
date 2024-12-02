@@ -76,12 +76,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>SFML_STATIC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\SFML\SFML\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\SFML\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\SFML\SFML\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\SFML\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;sfml-audio-s-d.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -139,13 +139,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CentralProcessor.cpp" />
     <ClCompile Include="DropMenu.cpp" />
     <ClCompile Include="OS_Simulator.cpp" />
+    <ClCompile Include="Process.cpp" />
+    <ClCompile Include="ProjectManagement.cpp" />
+    <ClCompile Include="Scheduler.cpp" />
     <ClCompile Include="Simulator.cpp" />
+    <ClCompile Include="VisualScheduler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CentralProcessor.h" />
     <ClInclude Include="DropMenu.h" />
+    <ClInclude Include="Process.h" />
+    <ClInclude Include="ProjectManagement.h" />
+    <ClInclude Include="Scheduler.h" />
     <ClInclude Include="Simulator.h" />
+    <ClInclude Include="VisualScheduler.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Montserrat-Bold.ttf" />
