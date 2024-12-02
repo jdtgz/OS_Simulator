@@ -29,7 +29,7 @@ void Scheduler::addNewArrival(Process* p)
 
 void Scheduler::addNewProcess()
 {
-    curProcesses.push_back(newProcesses.front());
+    readyProcesses.push_back(newProcesses.front());
     newProcesses.front()->curState = READY;
     
 	newProcesses.front() = nullptr;
@@ -39,11 +39,11 @@ void Scheduler::addNewProcess()
 
 void Scheduler::beginNewProcess()
 {
-    processor.newProcess(curProcesses.front());
-    curProcesses.front()->curState = RUNNING;
+    processor.newProcess(readyProcesses.front());
+    readyProcesses.front()->curState = RUNNING;
     
-    curProcesses.front() = nullptr;
-    curProcesses.pop_front();
+    readyProcesses.front() = nullptr;
+    readyProcesses.pop_front();
     preempt = 0;
 }
 
@@ -57,7 +57,7 @@ stepAction Scheduler::runProcesses(const long& time)
     }
     else if (processor.isFree()) 
     {
-        if (curProcesses.size() != 0) 
+        if (readyProcesses.size() != 0)
         {
             beginNewProcess();
             return BEGIN_RUN;
@@ -98,7 +98,7 @@ void Scheduler::print()
 
 void Scheduler::printReadyProcesses()
 {
-    for (const auto& proc : curProcesses) 
+    for (const auto& proc : readyProcesses)
     {
         std::cout << proc->id << " ";
     }
@@ -118,15 +118,15 @@ void ShortestJobNext::addNewProcess()
 {
     Process* tempProc = newProcesses.front();
 
-    if(curProcesses.size() == 0)
+    if(readyProcesses.size() == 0)
     {
-        curProcesses.push_back(tempProc);
+        readyProcesses.push_back(tempProc);
     } 
     else 
     {
-        std::list<Process*>::iterator proc = curProcesses.begin();
+        std::list<Process*>::iterator proc = readyProcesses.begin();
 
-        while(proc != curProcesses.end())
+        while(proc != readyProcesses.end())
         {
             if((*proc)->reqProcessorTime > tempProc->reqProcessorTime)
             {
@@ -135,7 +135,7 @@ void ShortestJobNext::addNewProcess()
 
             proc++;
         }
-        curProcesses.insert(proc, tempProc);
+        readyProcesses.insert(proc, tempProc);
     }
     newProcesses.front()->curState = READY;
     newProcesses.front() = nullptr;

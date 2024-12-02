@@ -6,11 +6,11 @@
 
 
 #pragma once
-enum Algs { FIFO, RR, SJN, SRT };
+enum Algs { FIFO, RR, SJN };
 
 
 enum stepAction { NO_ACT, ADMIT_NEW_PROCESS, HANDLE_INTERRUPT, 
-	BEGIN_RUN, CONTINUE_RUN, IO_REQUEST, COMPLETE, CONTEXT_SWITCH };
+	BEGIN_RUN, CONTINUE_RUN, COMPLETE, CONTEXT_SWITCH };
 
 
 class Scheduler
@@ -40,7 +40,7 @@ class Scheduler
 
 		std::list<Process*> newProcesses;
 
-		std::list<Process*> curProcesses;
+		std::list<Process*> readyProcesses;
 
 		CentralProcessor processor;
 };
