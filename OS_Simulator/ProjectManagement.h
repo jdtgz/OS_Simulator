@@ -7,12 +7,10 @@
 
 
 #pragma once
-/*
-inline bool procComp(const Process& p1, const Process& p2)
+inline bool procComp(Process& p1, Process& p2)
 {
-	// needs reworking maybe?
+	return p1.getArrivalTime() > p2.getArrivalTime();
 }
-*/
 
 
 class ProjectManagement
@@ -20,7 +18,6 @@ class ProjectManagement
 	public:
 		ProjectManagement();
 		~ProjectManagement();
-
 		ProjectManagement(Scheduler* mScheduler);
 
 		void activateProcesses(const int& time);

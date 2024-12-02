@@ -127,5 +127,5 @@ void ProjectManagement::readProcessFile(const std::string& file)
     }
 
     // need help with "fixing" proComp...
-    //std::sort(totalProcesses.begin(), totalProcesses.end(), procComp);
+    std::sort(totalProcesses.begin(), totalProcesses.end(), procComp);
 }
