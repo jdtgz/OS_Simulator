@@ -1,7 +1,7 @@
 #include "Process.h"
 
 
-Process::Process() : arrivalTime(-1), doneTime(-1), 
+Process::Process() : id(99999), arrivalTime(-1), doneTime(-1), 
 	reqProcessorTime(0), processorTime(0), curState(AWAITING)
 {
 }
@@ -33,76 +33,4 @@ void Process::printProcessSet(std::vector<Process>& processVec)
     {
         Proc.printProcess();
     }
-}
-
-
-unsigned int Process::getID()
-{
-    return id;
-}
-
-
-void Process::setID(unsigned int newID)
-{
-    id = newID;
-}
-
-
-State Process::getState()
-{
-    return curState;
-}
-
-
-void Process::setState(State newState)
-{
-    curState = newState;
-}
-
-
-long Process::getArrivalTime()
-{
-    return arrivalTime;
-}
-
-
-void Process::setArrivalTime(long arrival)
-{
-    arrivalTime = arrival;
-}
-
-
-long Process::getReqProcTime()
-{
-    return reqProcessorTime;
-}
-
-
-void Process::setReqProcTime(long newTime)
-{
-    reqProcessorTime = newTime;
-}
-
-
-long Process::getProcessorTime()
-{
-    return processorTime;
-}
-
-
-void Process::setProcessorTime(long newTime)
-{
-    processorTime = newTime;
-}
-
-
-long Process::getDoneTime()
-{
-    return doneTime;
-}
-
-
-void Process::setDoneTime(long newTime)
-{
-    doneTime = newTime;
 }

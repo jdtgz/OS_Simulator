@@ -23,14 +23,14 @@ Scheduler::Scheduler(CentralProcessor m_processor) : processor(m_processor)
 void Scheduler::addNewArrival(Process* p)
 {
 	newProcesses.push_back(p);
-    p->setState(NEW_ARRIVAL);
+    p->curState = NEW_ARRIVAL;
 }
 
 
 void Scheduler::addNewProcess()
 {
     curProcesses.push_back(newProcesses.front());
-    newProcesses.front()->setState(READY);
+    newProcesses.front()->curState = READY;
     
 	newProcesses.front() = nullptr;
     newProcesses.pop_front();
@@ -40,7 +40,7 @@ void Scheduler::addNewProcess()
 void Scheduler::beginNewProcess()
 {
     processor.newProcess(curProcesses.front());
-    curProcesses.front()->setState(RUNNING);
+    curProcesses.front()->curState = RUNNING;
     
     curProcesses.front() = nullptr;
     curProcesses.pop_front();
@@ -100,7 +100,7 @@ void Scheduler::printReadyProcesses()
 {
     for (const auto& proc : curProcesses) 
     {
-        std::cout << proc->getID() << " ";
+        std::cout << proc->id << " ";
     }
     std::cout << std::endl;
 }
@@ -128,7 +128,7 @@ void ShortestJobNext::addNewProcess()
 
         while(proc != curProcesses.end())
         {
-            if((*proc)->getReqProcTime() > tempProc->getReqProcTime())
+            if((*proc)->reqProcessorTime > tempProc->reqProcessorTime)
             {
                 break;
             }
@@ -137,7 +137,7 @@ void ShortestJobNext::addNewProcess()
         }
         curProcesses.insert(proc, tempProc);
     }
-    newProcesses.front()->setState(READY);
+    newProcesses.front()->curState = READY;
     newProcesses.front() = nullptr;
     newProcesses.pop_front();
 
@@ -203,7 +203,7 @@ Factory::~Factory()
 }
 
 
-static Scheduler* createAlgorithm(const int& choice, CentralProcessor mProcessor)
+Scheduler* Factory::createAlgorithm(const int& choice, CentralProcessor mProcessor)
 {
     Scheduler* selection;
     

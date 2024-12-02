@@ -15,7 +15,7 @@
 enum State { READY, RUNNING, BLOCKED, NEW_ARRIVAL, DONE, AWAITING };
 
 
-class Process
+struct Process
 {
 	public:
 		Process();
@@ -25,25 +25,6 @@ class Process
 
 		void printProcessSet(std::vector<Process>& processVec);
 
-		unsigned int getID();
-		void setID(unsigned int newID);
-		
-		State getState();
-		void setState(State newState);
-
-		long getArrivalTime();
-		void setArrivalTime(long arrival);
-
-		long getReqProcTime();
-		void setReqProcTime(long newTime);
-
-		long getProcessorTime();
-		void setProcessorTime(long newTime);
-
-		long getDoneTime();
-		void setDoneTime(long newTime);
-
-	private:
 		unsigned int id;
 
 		State curState; 

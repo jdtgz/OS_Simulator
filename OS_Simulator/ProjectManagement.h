@@ -7,12 +7,10 @@
 
 
 #pragma once
-/*
 inline bool procComp(const Process& p1, const Process& p2)
 {
-	// needs reworking maybe?
+	return p1.arrivalTime > p2.arrivalTime;
 }
-*/
 
 
 class ProjectManagement

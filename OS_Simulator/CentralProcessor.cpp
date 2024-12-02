@@ -23,10 +23,10 @@ void CentralProcessor::newProcess(Process* p)
 
 bool CentralProcessor::runProcess(const long& time)
 {
-	if(m_process->getProcessorTime() >= m_process->getReqProcTime())
+	if(m_process->processorTime >= m_process->reqProcessorTime )
     {
-        m_process->setState(DONE);
-        m_process->setDoneTime(time);
+        m_process->curState = DONE;
+        m_process->doneTime = time;
         m_process = nullptr;
 
         free = true;
@@ -34,7 +34,7 @@ bool CentralProcessor::runProcess(const long& time)
     } 
     else 
     {
-        m_process->setProcessorTime(m_process->getProcessorTime() + 1);
+        m_process->processorTime++;
         return false;
     }
 }

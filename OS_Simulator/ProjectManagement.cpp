@@ -3,6 +3,7 @@
 
 ProjectManagement::ProjectManagement()
 {
+    mScheduler = nullptr;
 }
 
 
@@ -22,7 +23,7 @@ void ProjectManagement::activateProcesses(const int& time)
     
     if (iter > 0) 
     {
-        while (totalProcesses[iter].getArrivalTime() == time)
+        while (totalProcesses[iter].arrivalTime == time)
         {
             mScheduler->addNewArrival(&totalProcesses[iter]);
             iter--;
@@ -43,7 +44,7 @@ void ProjectManagement::printStates()
 
     for (auto& Proc : totalProcesses) 
     {
-        switch (Proc.getState()) 
+        switch (Proc.curState) 
         {
             case READY:
                 stateChar = 'r';
@@ -116,16 +117,16 @@ void ProjectManagement::readProcessFile(const std::string& file)
         ss.clear();
         ss.str(line);
 
-        proc.setID(procIDctrl);
+        proc.id = procIDctrl;
         ++procIDctrl;
 
         // Needs fixing...
-        //ss >> proc.setArrivalTime();
-        //ss >> proc.reqProcessorTime;
+        ss >> proc.arrivalTime;
+        ss >> proc.reqProcessorTime;
 
         totalProcesses.push_back(proc);
     }
 
     // need help with "fixing" proComp...
-    //std::sort(totalProcesses.begin(), totalProcesses.end(), procComp);
+    std::sort(totalProcesses.begin(), totalProcesses.end(), procComp);
 }
