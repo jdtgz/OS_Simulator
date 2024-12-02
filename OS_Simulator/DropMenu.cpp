@@ -1,6 +1,9 @@
 #include "DropMenu.h"
 
-
+// Description: Default constructor 
+// Pre Conditions: None
+// Post Conditions: Create empty dropmenu
+// Params: None
 DropMenu::DropMenu()
 {
 	active = false;
@@ -80,6 +83,10 @@ void DropMenu::setOptionNames(std::vector<std::string> names)
 }
 
 
+// Description: Draws all the rectangle shapes and text onto window
+// Post Condition: Returns nothing, but should draw the shapes onto the screen and display them
+// Pre Condition: window has to be running and polling events somewhere in program
+// Params: RenderWindow from sfml 
 void DropMenu::showMenu(sf::RenderWindow& window)
 {	
 	window.draw(menu);

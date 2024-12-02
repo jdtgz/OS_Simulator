@@ -21,13 +21,10 @@ void ProjectManagement::activateProcesses(const int& time)
 {
     static int iter = totalProcesses.size() - 1;
     
-    if (iter > 0) 
+    while (iter >= 0 && totalProcesses[iter].arrivalTime == time)
     {
-        while (totalProcesses[iter].arrivalTime == time)
-        {
-            mScheduler->addNewArrival(&totalProcesses[iter]);
-            iter--;
-        }
+        mScheduler->addNewArrival(&totalProcesses[iter]);
+        iter--;
     }
 }
 
@@ -101,8 +98,7 @@ void ProjectManagement::readProcessFile(const std::string& file)
     std::string line, strItem;
 
     Process proc;
-    unsigned int ioIDctrl(1), procIDctrl(1);
-    int ioTime, ioDur;
+    unsigned int procIDctrl(1);
 
     totalProcesses.clear();
     if (!in.good())
@@ -127,6 +123,5 @@ void ProjectManagement::readProcessFile(const std::string& file)
         totalProcesses.push_back(proc);
     }
 
-    // need help with "fixing" proComp...
     std::sort(totalProcesses.begin(), totalProcesses.end(), procComp);
 }

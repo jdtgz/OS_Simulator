@@ -161,6 +161,9 @@
     <Font Include="Montserrat-Bold.ttf" />
     <Font Include="Montserrat-Regular.ttf" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="procInput1.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
