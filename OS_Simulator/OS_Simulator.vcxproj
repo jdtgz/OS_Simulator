@@ -142,10 +142,12 @@
     <ClCompile Include="DropMenu.cpp" />
     <ClCompile Include="OS_Simulator.cpp" />
     <ClCompile Include="Simulator.cpp" />
+    <ClCompile Include="VisualScheduler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DropMenu.h" />
     <ClInclude Include="Simulator.h" />
+    <ClInclude Include="VisualScheduler.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Montserrat-Bold.ttf" />
