@@ -8,11 +8,6 @@
 
 #pragma once
 inline bool procComp(const Process& p1, const Process& p2)
-inline bool procComp(const Process& p1, const Process& p2)
-inline bool procComp(const Process& p1, const Process& p2)
-inline bool procComp(const Process& p1, const Process& p2)
-inline bool procComp(const Process& p1, const Process& p2)
-inline bool procComp(const Process& p1, const Process& p2)
 {
 	return p1.arrivalTime > p2.arrivalTime;
 }
