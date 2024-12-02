@@ -12,7 +12,7 @@ int main(){
 
     cout << "started" << endl;
     //creating processMgmt object with chosen scheduler
-    Alg algorithmChoice = SJN;
+    Alg algorithmChoice = RR;
     ProcessManagement processMgmt = ProcessManagement(Factory::createAlgorithm(algorithmChoice, Processor()));
     processMgmt.printScheduler();
 
@@ -61,8 +61,8 @@ int main(){
             case continueRun:
                 cout << "[contRun]\t";
                 break;
-            case ioRequest:
-                cout << "[  ioReq]\t";
+            case contextSwitch:
+                cout << "[  switch]\t";
                 break;
             case complete:
                 cout << "[ finish]\t";

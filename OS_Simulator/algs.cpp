@@ -9,11 +9,26 @@ void ShortestJobNext::addNewProcess(){
         list<Process*>::iterator proc = m_processes.begin();
         while(proc != m_processes.end()){
             if((*proc)->reqProcessorTime > tempProc->reqProcessorTime){
-                m_processes.insert(proc, tempProc);
-                return;
+                break;
             }
             proc++;
         }
         m_processes.insert(proc, tempProc);
+    }
+    new_processes.front()->state = ready;
+    new_processes.front() = nullptr;
+    new_processes.pop_front();
+    tempProc = nullptr;
+}
+
+stepActionEnum RoundRobin::continueProcessing(){
+    if(preempt == preemptionTime){
+        new_processes.push_front(m_processor.checkProcess());
+        addNewProcess();
+        beginNewProcess();
+        return contextSwitch;
+    } else {
+        preempt++;
+        return continueRun;
     }
 }

@@ -12,7 +12,7 @@ class Processor{
         // Essential class functions
         void newProcess(Process* p);
         bool runProcess(const long& time);
-        Process checkProcess() {return *m_process;}
+        Process* checkProcess() {return m_process;}
         bool isFree() {return free;}
 
     private:
