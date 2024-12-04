@@ -84,8 +84,8 @@ void DropMenu::setOptionNames(std::vector<std::string> names)
 
 
 // Description: Draws all the rectangle shapes and text onto window
-// Post Condition: Returns nothing, but should draw the shapes onto the screen and display them
 // Pre Condition: window has to be running and polling events somewhere in program
+// Post Condition: Returns nothing, but should draw the shapes onto the screen and display them
 // Params: RenderWindow from sfml 
 void DropMenu::showMenu(sf::RenderWindow& window)
 {	

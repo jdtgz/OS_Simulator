@@ -1,5 +1,6 @@
 /*
- * 
+ * Process struct holds all process metadata
+ * Simulates the OS process control block
  */
 
 #include<iostream>
@@ -17,23 +18,28 @@ enum State { READY, RUNNING, BLOCKED, NEW_ARRIVAL, DONE, AWAITING };
 
 struct Process
 {
-	public:
-		Process();
-		~Process();
+	// Constructor & Destructor
+	Process();
+	~Process();
 
-		void printProcess();
+	// Prints all member variables
+	void printProcess();
 
-		void printProcessSet(std::vector<Process>& processVec);
+	// Unique integer used for process identification
+	unsigned int id;
 
-		unsigned int id;
-
-		State curState; 
+	// The state of the process
+	State curState; 
 		
-		long arrivalTime;
+	// The time interval at which the process is admitted to the scheduler
+	long arrivalTime;
 		
-		long reqProcessorTime;
+	// The total processing time needed
+	long reqProcessorTime;
 		
-		long processorTime;
+	// The processing time consumed
+	long processorTime;
 		
-		long doneTime;
+	// The time interval at which the process is completed
+	long doneTime;
 };
