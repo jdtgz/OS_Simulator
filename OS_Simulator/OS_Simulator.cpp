@@ -8,11 +8,6 @@
 #include "Simulator.h"
 #include "ProjectManagement.h"
 
-#include <chrono>
-#include <thread>
-
-using namespace std;
-
 
 int main()
 {

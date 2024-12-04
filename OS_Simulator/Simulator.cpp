@@ -23,9 +23,8 @@ Simulator::Simulator()
 
     file = "./procInput1.txt";
 
-    osSimComplete = 0;
     time = 0; 
-    sleepDuration = 25;
+    sleepDuration = 0;
     remainingProc = 0;
 
 }
@@ -138,15 +137,16 @@ void Simulator::update()
 
             os->activateProcesses(time);
 
-            stepAction step = os->runStep(time);
-            if (step == COMPLETE)
+            ProcessInProgress step = os->runStep(time);
+            if (*(step.latestStep) == COMPLETE)
                 remainingProc--;
 
             std::cout << std::setw(5) << time << "\t";
-            switch (step)
+            switch (*(step.latestStep))
             {
                 case ADMIT_NEW_PROCESS:
                     std::cout << "[  admit]\t";
+
                     break;
                 case BEGIN_RUN:
                     std::cout << "[  begin]\t";

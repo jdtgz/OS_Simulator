@@ -33,7 +33,7 @@ class ProjectManagement
 		void activateProcesses(const int& time);
 
 		// Runs a single scheduler step
-		stepAction runStep(const long& time);
+		ProcessInProgress runStep(const long& time);
 
 		// Prints the states of all processes (debugging function)
 		void printStates();

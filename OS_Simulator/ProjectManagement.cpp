@@ -48,7 +48,7 @@ void ProjectManagement::activateProcesses(const int& time)
 // Pre Conditions: Must have a scheduler
 // Post Conditions: Returns the action taken by the scheduler
 // Params: The time interval
-stepAction ProjectManagement::runStep(const long& time)
+ProcessInProgress ProjectManagement::runStep(const long& time)
 {
 	 return mScheduler->runProcesses(time);
 }

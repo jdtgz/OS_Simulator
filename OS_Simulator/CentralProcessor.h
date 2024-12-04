@@ -18,7 +18,7 @@ class CentralProcessor
         void newProcess(Process* p);
 
         // Continues to run a process or completes a process
-        bool runProcess(const long& time);
+        Process* runProcess(const long& time);
 
         // Returns m_process
         Process* checkProcess();

@@ -34,23 +34,22 @@ void CentralProcessor::newProcess(Process* p)
 
 // Description: Run the process a step
 // Pre Conditions: Must have a process
-// Post Conditions: Returns a boolean indicating whether the process is complete or not
+// Post Conditions: Returns the process after having updated it
 // Params: The time interval
-bool CentralProcessor::runProcess(const long& time)
+Process* CentralProcessor::runProcess(const long& time)
 {
 	if(m_process->processorTime >= m_process->reqProcessorTime )
     {
         m_process->curState = DONE;
         m_process->doneTime = time;
-        m_process = nullptr;
 
         free = true;
-        return true;
+        return m_process;
     } 
     else 
     {
         m_process->processorTime++;
-        return false;
+        return m_process;
     }
 }
 

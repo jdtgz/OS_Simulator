@@ -1,5 +1,6 @@
 #include "Process.h"
 
+
 // Description: Default constructor 
 // Pre Conditions: None
 // Post Conditions: Creates a process with set default values
@@ -16,6 +17,24 @@ Process::Process() : id(99999), arrivalTime(-1), doneTime(-1),
 // Params: None
 Process::~Process()
 {
+}
+
+
+
+// Description: Assignment operator overload to allow proper assignement of processes 
+// Pre Conditions: other is a valid process with values
+// Post Condition: this process and other will be the same
+// Params: Process object 
+Process& Process::operator=(const Process& other)
+{
+    this->id = other.id;
+    this->curState = other.curState;
+    this->arrivalTime = other.arrivalTime;
+    this->reqProcessorTime = other.reqProcessorTime;
+    this->processorTime = other.processorTime;
+    this->doneTime = other.doneTime;
+
+    return *this;
 }
 
 

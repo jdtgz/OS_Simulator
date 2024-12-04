@@ -16,6 +16,17 @@ enum stepAction { NO_ACT, ADMIT_NEW_PROCESS,
 	BEGIN_RUN, CONTINUE_RUN, COMPLETE, CONTEXT_SWITCH };
 
 
+// 
+struct ProcessInProgress
+{
+    ProcessInProgress();
+    ~ProcessInProgress();
+
+    Process* p;
+    stepAction* latestStep;
+};
+
+
 // Parent scheduler class
 class Scheduler
 {
@@ -31,16 +42,16 @@ class Scheduler
 		void addNewArrival(Process* p);
 
         // Adds a process from newProcesses to readyProcesses
-		virtual void addNewProcess();
+		virtual Process* addNewProcess();
 
         // Begins running a new process by inserting it into the processor
-		virtual void beginNewProcess();
+		virtual Process* beginNewProcess();
 
         // Continues running a process
-        virtual stepAction continueProcessing();
+        virtual void continueProcessing(ProcessInProgress& p);
 
         // Chooses an action above based on the resources available
-		stepAction runProcesses(const long& time);
+		ProcessInProgress runProcesses(const long& time);
 
         // Prints "FIFO" (debugging function)
         virtual void print();
@@ -78,7 +89,7 @@ class ShortestJobNext : public Scheduler
         ShortestJobNext(CentralProcessor mProc);
 
         // Adds and sorts a new process into readyProcesses based on reqProcessorTime (Override)
-        virtual void addNewProcess();
+        virtual Process* addNewProcess();
 
         // Prints "SJN" (debugging function)
         virtual void print();
@@ -94,10 +105,10 @@ class RoundRobin : public Scheduler
         RoundRobin(CentralProcessor mProc);
 
         // Begins running a new process and sets preempt = 0 (Override)
-        virtual void beginNewProcess();
+        virtual Process* beginNewProcess();
 
         // Continues running a process or switches the active process
-        virtual stepAction continueProcessing();
+        virtual void continueProcessing(ProcessInProgress& proc);
 
         // Setter function for preemptionTime
         void setPreemptionTime(int timer);

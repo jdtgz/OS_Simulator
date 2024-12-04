@@ -50,7 +50,7 @@ class Simulator
 		std::string file;
 		std::stringstream ss;
 
-		int osSimComplete;
+		// Simulation implementation markers 
 		long time;
 		long sleepDuration;
 		int remainingProc;

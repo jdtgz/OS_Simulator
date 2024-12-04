@@ -22,6 +22,9 @@ struct Process
 	Process();
 	~Process();
 
+	// Assignment operator overload 
+	Process& operator=(const Process& other);
+
 	// Prints all member variables
 	void printProcess();
 

@@ -1,6 +1,23 @@
 #include "Scheduler.h"
 
 /*
+ * ProcessInProgress Functions
+ */
+
+ProcessInProgress::ProcessInProgress()
+{
+    p = new Process();
+    latestStep = new stepAction;
+}
+
+ProcessInProgress::~ProcessInProgress()
+{
+    delete p;
+    delete latestStep;
+}
+
+
+/*
  * Scheduler Funcions
  */
 
@@ -46,13 +63,15 @@ void Scheduler::addNewArrival(Process* p)
 // Pre Conditions: newProcesses is not empty
 // Post Conditions: The process from newProcesses is moved to readyProcesses and its state is updated
 // Params: None
-void Scheduler::addNewProcess()
+Process* Scheduler::addNewProcess()
 {
     readyProcesses.push_back(newProcesses.front());
     newProcesses.front()->curState = READY;
     
 	newProcesses.front() = nullptr;
     newProcesses.pop_front();
+
+    return readyProcesses.front();
 }
 
 
@@ -60,63 +79,70 @@ void Scheduler::addNewProcess()
 // Pre Conditions: readyProcesses is not empty and processor is free
 // Post Conditions: The process is moved from readyProcesses to processor and its state is updated
 // Params: None
-void Scheduler::beginNewProcess()
+Process* Scheduler::beginNewProcess()
 {
     processor.newProcess(readyProcesses.front());
     readyProcesses.front()->curState = RUNNING;
     
     readyProcesses.front() = nullptr;
     readyProcesses.pop_front();
+
+    return readyProcesses.front();
 }
 
 
 // Description: Chooses an action to run based on the resources available
 // Pre Conditions: Time loop must be started
-// Post Conditions: Returns the stepAction taken
+// Post Conditions: Returns the ProcessInProgress object that includes step and process itself
 // Params: Takes in the time interval
-stepAction Scheduler::runProcesses(const long& time)
+ProcessInProgress Scheduler::runProcesses(const long& time)
 {
+    ProcessInProgress proc;
+
     if (newProcesses.size() > 0) 
     {
-        addNewProcess();
-        return ADMIT_NEW_PROCESS;
+        *proc.p = *addNewProcess();
+        *proc.latestStep = ADMIT_NEW_PROCESS;
     }
     else if (processor.isFree()) 
     {
         if (readyProcesses.size() != 0)
         {
-            beginNewProcess();
-            return BEGIN_RUN;
+            *proc.p = *beginNewProcess();
+            *proc.latestStep = BEGIN_RUN;
         }
         else 
         {
-            return NO_ACT;
+            proc.p = nullptr;
+            *proc.latestStep = NO_ACT;
         }
     }
-
     else 
     {
-        bool processCompleted = processor.runProcess(time);
+        *proc.p = *(processor.checkProcess());
+        bool processCompleted = (proc.p->curState == DONE) ? true : false;
 
         if (processCompleted) 
         {
-            return COMPLETE;
+            *proc.latestStep = COMPLETE;
         }
         else 
         {
-            return continueProcessing();
+            continueProcessing(proc);
         }
-    }
+    }  
+    
+    return proc;
 }
 
 
-// Description: Returns a continue run stepAction
+// Description: Sets the step to continue run from the ProcessInProgress object
 // Pre Conditions: The process in the processor must be run and incomplete
-// Post Conditions: Returns CONTINUE_RUN stepAction
-// Params: None
-stepAction Scheduler::continueProcessing()
+// Post Conditions: returns nothing, but edits the state 
+// Params: ProcessInProgess object 
+void Scheduler::continueProcessing(ProcessInProgress& proc)
 {
-	return CONTINUE_RUN;
+    *proc.latestStep = CONTINUE_RUN;
 }
 
 
@@ -161,7 +187,7 @@ ShortestJobNext::ShortestJobNext(CentralProcessor mProc) : Scheduler(mProc)
 // Pre Conditions: newProcesses is not empty
 // Post Conditions: Adds the front of newProcesses to readyProcesses
 // Params: None
-void ShortestJobNext::addNewProcess()
+Process* ShortestJobNext::addNewProcess()
 {
     Process* tempProc = newProcesses.front();
 
@@ -185,10 +211,14 @@ void ShortestJobNext::addNewProcess()
         readyProcesses.insert(proc, tempProc);
     }
     newProcesses.front()->curState = READY;
+
+    Process* addedProc = new Process();
+    addedProc = newProcesses.front();
+
     newProcesses.front() = nullptr;
     newProcesses.pop_front();
 
-    tempProc = nullptr;
+    return addedProc;
 }
 
 
@@ -221,7 +251,7 @@ RoundRobin::RoundRobin(CentralProcessor mProc) : Scheduler(mProc)
 // Pre Conditions: readyProcesses is not empty and processor is free
 // Post Conditions: The process is moved from readyProcesses to processor and its state is updated
 // Params: None
-void RoundRobin::beginNewProcess()
+Process* RoundRobin::beginNewProcess()
 {
     processor.newProcess(readyProcesses.front());
     readyProcesses.front()->curState = RUNNING;
@@ -229,27 +259,29 @@ void RoundRobin::beginNewProcess()
     readyProcesses.front() = nullptr;
     readyProcesses.pop_front();
     preempt = 0;
+
+    return processor.checkProcess();
 }
 
 
 // Description: Continues running or switches the running process
 // Pre Conditions: The process in the processor must be run and incomplete
-// Post Conditions: Returns CONTEXT_SWITCH or CONTINUE_RUN depending on preempt and preemptionTimer
-// Params: None
-stepAction RoundRobin::continueProcessing()
+// Post Conditions: returns nothing, but edits the state depending on preempt/preemptionTimer
+// Params: ProcessInProgess object 
+void RoundRobin::continueProcessing(ProcessInProgress& proc)
 {
     if (preempt == preemptionTime) 
     {
-        newProcesses.push_front(processor.checkProcess());
+        newProcesses.push_front(proc.p);
         addNewProcess();
         beginNewProcess();
 
-        return CONTEXT_SWITCH;
+        *proc.latestStep = CONTEXT_SWITCH;
     }
     else 
     {
         preempt++;
-        return CONTINUE_RUN;
+        *proc.latestStep = CONTINUE_RUN;
     }
 }
 
