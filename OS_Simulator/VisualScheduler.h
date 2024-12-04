@@ -15,15 +15,25 @@ class VisualScheduler
 		// Creates the simulation visuals based on the window size,
 		VisualScheduler(sf::Vector2f windowSize, int totalTime, int noProcesses);
 
-		// Takes the position of the mouse and handles input from it accordingly
-		void handleInput(sf::Vector2f pos);
+		// Adds a visualizer process unit
+		void addProcessRect();
+
+		// Updates the process based on the step 
+		void updateProcess(Process p, stepAction curStep);
+
+		// Handle input for the algorithm selection menu
+		int algorithmInput(sf::Vector2f pos);
+
+		// Handle the input for the simulation selection menu
+		int simulationInput(sf::Vector2f pos);
 
 		// Draws all objects onto the window
 		void showTimeLine(sf::RenderWindow& window);
 
 	private:
 		// Menus for user input
-		std::vector<DropMenu> menus;
+		DropMenu* algMenu;
+		DropMenu* simMenu; 
 
 		// Shapes that make up the timeline of process executions
 		std::vector<sf::RectangleShape> timeline;
@@ -34,7 +44,9 @@ class VisualScheduler
 		std::vector<sf::Text> timelineLabels;
 
 		// Shapes that track the progress of processes being ran
+		sf::Vector2f size;
 		std::vector<sf::RectangleShape> procBoxes;
+		std::vector<unsigned int> procIDs;
 
 		// Text that labels each process 
 		std::vector<sf::Text> procNames;

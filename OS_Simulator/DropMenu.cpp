@@ -111,7 +111,7 @@ void DropMenu::showMenu(sf::RenderWindow& window)
 }
 
 
-void DropMenu::handleInput(sf::Vector2f pos)
+int DropMenu::handleInput(sf::Vector2f pos)
 {
 	auto inRange = [](sf::Vector2f pos, sf::RectangleShape shape) -> bool
 		{
@@ -119,6 +119,8 @@ void DropMenu::handleInput(sf::Vector2f pos)
 				&& pos.y >= shape.getPosition().y && pos.y <= (shape.getPosition().y + shape.getSize().y);
 				
 		};
+
+	int selection = -1;
 
 	if (inRange(pos, menu))
 	{
@@ -128,9 +130,15 @@ void DropMenu::handleInput(sf::Vector2f pos)
 
 		// check for input and activate drop menu accordingly
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !active)
+		{
+			selection = 0;
 			activateMenu();
-		else if(sf::Mouse::isButtonPressed(sf::Mouse::Left) && active)
+		}
+		else if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && active)
+		{
+			selection = 0;
 			deactivateMenu();
+		}
 	}
 	else
 	{
@@ -150,8 +158,8 @@ void DropMenu::handleInput(sf::Vector2f pos)
 
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
-				std::cout << "Box: " << i << std::endl;
 				active = false;
+				selection = i + 1;
 			}
 		}
 		else
@@ -162,4 +170,5 @@ void DropMenu::handleInput(sf::Vector2f pos)
 		}
 	}
 
+	return selection;
 }

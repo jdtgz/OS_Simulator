@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include "SFML/Graphics.hpp"
+#include "ProjectManagement.h"
 
 
 #pragma once
@@ -33,7 +34,7 @@ class DropMenu
 		void showMenu(sf::RenderWindow& window);
 
 		// takes position of mouse on window and handles the input of it 
-		void handleInput(sf::Vector2f pos);
+		int handleInput(sf::Vector2f pos);
 
 	private:
 		// Keeps track of when the menu is "dropped" and reads input
