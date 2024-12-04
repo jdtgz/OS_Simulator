@@ -33,7 +33,7 @@ class ProjectManagement
 		void activateProcesses(const int& time);
 
 		// Runs a single scheduler step
-		stepAction runStep(const long& time);
+		void runStep(const long& time);
 
 		// Prints the states of all processes (debugging function)
 		void printStates();
@@ -46,6 +46,9 @@ class ProjectManagement
 
 		// Returns the total number of processes
 		int numProcesses();
+
+		// Returns the schedulers current process
+		ProcessInProgress getCurrentProcess();
 	private:
 		// Vector of all processes
 		std::vector<Process> totalProcesses;

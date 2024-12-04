@@ -138,12 +138,15 @@ void Simulator::update()
 
             os->activateProcesses(time);
 
-            stepAction step = os->runStep(time);
-            if (step == COMPLETE)
+            os->runStep(time);
+
+            ProcessInProgress myProcess = os->getCurrentProcess();
+
+            if (myProcess.latestStep == COMPLETE)
                 remainingProc--;
 
             std::cout << std::setw(5) << time << "\t";
-            switch (step)
+            switch (myProcess.latestStep)
             {
                 case ADMIT_NEW_PROCESS:
                     std::cout << "[  admit]\t";

@@ -22,6 +22,17 @@ Scheduler::~Scheduler()
 }
 
 
+ProcessInProgress::ProcessInProgress()
+{
+    p = nullptr;
+    latestStep = NO_ACT;
+}
+
+ProcessInProgress::~ProcessInProgress() 
+{
+}
+
+
 // Description: Overload constructor 
 // Pre Conditions: None
 // Post Conditions: Create FIFO scheduler with a processor
@@ -53,6 +64,8 @@ void Scheduler::addNewProcess()
     
 	newProcesses.front() = nullptr;
     newProcesses.pop_front();
+
+    currentProcess.p = readyProcesses.back();
 }
 
 
@@ -74,37 +87,45 @@ void Scheduler::beginNewProcess()
 // Pre Conditions: Time loop must be started
 // Post Conditions: Returns the stepAction taken
 // Params: Takes in the time interval
-stepAction Scheduler::runProcesses(const long& time)
+void Scheduler::runProcesses(const long& time)
 {
     if (newProcesses.size() > 0) 
     {
         addNewProcess();
-        return ADMIT_NEW_PROCESS;
+        currentProcess.latestStep = ADMIT_NEW_PROCESS;
+        return;
     }
     else if (processor.isFree()) 
     {
         if (readyProcesses.size() != 0)
         {
             beginNewProcess();
-            return BEGIN_RUN;
+            currentProcess.latestStep = BEGIN_RUN;
+            currentProcess.p = processor.checkProcess();
+            return;
         }
         else 
         {
-            return NO_ACT;
+            currentProcess.latestStep = NO_ACT;
+            currentProcess.p = nullptr;
+            return;
         }
     }
 
     else 
     {
+        currentProcess.p = processor.checkProcess();
         bool processCompleted = processor.runProcess(time);
 
         if (processCompleted) 
         {
-            return COMPLETE;
+            currentProcess.latestStep = COMPLETE;
+            return;
         }
         else 
         {
-            return continueProcessing();
+            currentProcess.latestStep = continueProcessing();
+            return;
         }
     }
 }
@@ -188,6 +209,7 @@ void ShortestJobNext::addNewProcess()
     newProcesses.front() = nullptr;
     newProcesses.pop_front();
 
+    currentProcess.p = tempProc;
     tempProc = nullptr;
 }
 
@@ -325,4 +347,9 @@ Scheduler* Factory::createAlgorithm(const int& choice, CentralProcessor mProcess
     }
 
     return selection;
+}
+
+ProcessInProgress Scheduler::getCurrentProcess() 
+{
+    return currentProcess;
 }

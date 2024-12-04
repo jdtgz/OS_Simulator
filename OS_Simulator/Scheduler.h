@@ -16,6 +16,17 @@ enum stepAction { NO_ACT, ADMIT_NEW_PROCESS,
 	BEGIN_RUN, CONTINUE_RUN, COMPLETE, CONTEXT_SWITCH };
 
 
+// 
+struct ProcessInProgress
+{
+    ProcessInProgress();
+    ~ProcessInProgress();
+
+    Process* p;
+    stepAction latestStep;
+};
+
+
 // Parent scheduler class
 class Scheduler
 {
@@ -40,7 +51,7 @@ class Scheduler
         virtual stepAction continueProcessing();
 
         // Chooses an action above based on the resources available
-		stepAction runProcesses(const long& time);
+		void runProcesses(const long& time);
 
         // Prints "FIFO" (debugging function)
         virtual void print();
@@ -48,6 +59,8 @@ class Scheduler
         // Prints all processes in the ready list (debugging function)
 		void printReadyProcesses();
 
+        // Returns the current process
+        ProcessInProgress getCurrentProcess();
 	protected:
         // List of newly admitted processes
 		std::list<Process*> newProcesses;
@@ -57,6 +70,9 @@ class Scheduler
 
         // The processor used to run processes
 		CentralProcessor processor;
+
+        // The process being updated at the current step
+        ProcessInProgress currentProcess;
 };
 
 
