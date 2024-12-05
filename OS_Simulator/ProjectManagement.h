@@ -47,6 +47,9 @@ class ProjectManagement
 		// Returns the total number of processes
 		int numProcesses();
 
+		// Returns ID of process at index
+		unsigned int getProcessID(int index);
+
 		// Returns the schedulers current process
 		ProcessInProgress getCurrentProcess();
 	private:

@@ -18,8 +18,11 @@ class VisualScheduler
 		// Adds a visualizer process unit
 		void addProcessRect();
 
+		// Initializes all the ids for procBoxes from pointer array
+		void initIDs(int procNum, unsigned int id);
+
 		// Updates the process based on the step 
-		void updateProcess(Process p, stepAction curStep);
+		void updateProcess(ProcessInProgress stepProc);
 
 		// Handle input for the algorithm selection menu
 		int algorithmInput(sf::Vector2f pos);
@@ -45,8 +48,8 @@ class VisualScheduler
 
 		// Shapes that track the progress of processes being ran
 		sf::Vector2f size;
+		unsigned int* procIDs;
 		std::vector<sf::RectangleShape> procBoxes;
-		std::vector<unsigned int> procIDs;
 
 		// Text that labels each process 
 		std::vector<sf::Text> procNames;

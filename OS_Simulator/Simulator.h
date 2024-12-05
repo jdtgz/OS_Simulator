@@ -36,6 +36,7 @@ class Simulator
 		
 		// Handles all the visuals necessary for simulation of OS scheduling
 		VisualScheduler* scheduleVisuals;
+		bool visualsLoaded;
 
 		// simulation playback control
 		bool start;
@@ -50,7 +51,6 @@ class Simulator
 		std::string file;
 		std::stringstream ss;
 
-		int osSimComplete;
 		long time;
 		long sleepDuration;
 		int remainingProc;

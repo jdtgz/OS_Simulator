@@ -127,6 +127,16 @@ int ProjectManagement::numProcesses()
 }
 
 
+//
+//
+//
+//
+unsigned int ProjectManagement::getProcessID(int index)
+{
+    return totalProcesses[index].id;
+}
+
+
 // Description: Converts the process file data into a vector
 // Pre Conditions: Must have a correctly formatted txt file
 // Post Conditions: Fills totalProcesses vector with the processes in the chosen file

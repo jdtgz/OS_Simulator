@@ -5,6 +5,7 @@ VisualScheduler::VisualScheduler()
 {
     algMenu = nullptr;
     simMenu = nullptr;
+    procIDs = nullptr;
 }
 
 
@@ -12,6 +13,7 @@ VisualScheduler::~VisualScheduler()
 {
     delete algMenu;
     delete simMenu;
+    delete procIDs;
 }
 
 
@@ -73,11 +75,14 @@ VisualScheduler::VisualScheduler(sf::Vector2f windowSize, int totalTime, int noP
     // Initialize all the process boxes and their names
     size.x = 1.f;
     size.y = 30.f;
+    procIDs = new unsigned int[noProcesses];
     for (int i = 0; i < noProcesses; i++)
     {
         procBoxes.push_back(sf::RectangleShape(size));
         procBoxes[i].setFillColor(sf::Color::White);
         procBoxes[i].move(50.f, timeline[0].getPosition().y + ((i + 1) * (size.y + 15.f)));
+
+        procIDs[i] = 9999;
 
         procNames.push_back(sf::Text("P" + std::to_string(i + 1), font, 20));
         procNames[i].setFillColor(sf::Color::Black);
@@ -110,49 +115,88 @@ void VisualScheduler::addProcessRect()
 }
 
 
-void VisualScheduler::updateProcess(Process p, stepAction curStep)
+//
+//
+//
+// params: proc refers to the index of process rect (0-some num)
+void VisualScheduler::initIDs(int proc, unsigned int id)
 {
-    // Adjust the color according to current state
-    int input = p.curState;
-    switch (input)
+    if (proc < procBoxes.size())
     {
-        case READY:
-            
-            break;
-        case RUNNING:
-            break;
-        case BLOCKED:
-            break;
-        case NEW_ARRIVAL:
-            break;
-        case DONE:
-            break;
-        case AWAITING:
-            break;
+        procIDs[proc] = id;
     }
-    
-    input = curStep;
-    // Adjust the rectangle shape according to step taken
-    switch (input)
+    else
     {
-        case ADMIT_NEW_PROCESS:
-            std::cout << "[  admit]\t";
-            break;
-        case BEGIN_RUN:
-            std::cout << "[  begin]\t";
-            break;
-        case CONTINUE_RUN:
-            std::cout << "[contRun]\t";
-            break;
-        case CONTEXT_SWITCH:
-            std::cout << "[  switch]\t";
-            break;
-        case COMPLETE:
-            std::cout << "[ finish]\t";
-            break;
-        case NO_ACT:
-            std::cout << "[*noAct*]\t";
-            break;
+        std::cout << "Trying to assing ID for process outside of range: " 
+            << proc << " vs. size: " << procBoxes.size() << std::endl;
+    }
+}
+
+
+//
+//
+//
+//
+void VisualScheduler::updateProcess(ProcessInProgress stepProc)
+{
+    int pIndex = -1;
+    for (int i = 0; i < procBoxes.size(); i++)
+    {
+        if (stepProc.p->id == procIDs[i])
+            pIndex = i;
+    }
+
+    if (pIndex == -1)
+    {
+        std::cout << "Could not find rectangle component with stepProc.id" << std::endl;
+    }
+    else
+    {
+        switch (stepProc.p->curState)
+        {
+            case READY:
+                procBoxes[pIndex].setFillColor(sf::Color::Blue);
+                break;
+            case RUNNING:
+                procBoxes[pIndex].setFillColor(sf::Color::Cyan);
+                procBoxes[pIndex].setSize(sf::Vector2f(procBoxes[pIndex].getSize().x + 10.f, procBoxes[pIndex].getSize().y));
+                break;
+            case BLOCKED:
+                procBoxes[pIndex].setFillColor(sf::Color::Red);
+                break;
+            case NEW_ARRIVAL:
+                procBoxes[pIndex].setFillColor(sf::Color::White);
+                break;
+            case DONE:
+                procBoxes[pIndex].setFillColor(sf::Color::Green);
+                break;
+            case AWAITING:
+                procBoxes[pIndex].setFillColor(sf::Color::Yellow);
+                break;
+        }
+    
+        // Adjust the rectangle shape according to step taken
+        switch ( stepProc.latestStep)
+        {
+            case ADMIT_NEW_PROCESS:
+                std::cout << "[  admit]\t";
+                break;
+            case BEGIN_RUN:
+                std::cout << "[  begin]\t";
+                break;
+            case CONTINUE_RUN:
+                std::cout << "[contRun]\t";
+                break;
+            case CONTEXT_SWITCH:
+                std::cout << "[  switch]\t";
+                break;
+            case COMPLETE:
+                std::cout << "[ finish]\t";
+                break;
+            case NO_ACT:
+                std::cout << "[*noAct*]\t";
+                break;
+        }
     }
 }
 

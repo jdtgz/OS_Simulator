@@ -10,6 +10,7 @@ Simulator::Simulator()
         sf::Style::Titlebar | sf::Style::Close);
 
     scheduleVisuals = new VisualScheduler(windowSize, 15, 0);
+    visualsLoaded = false;
     
     start = false;
     paused = true;
@@ -23,10 +24,9 @@ Simulator::Simulator()
 
     file = "./procInput1.txt";
 
-    osSimComplete = 0;
     time = 0; 
-    sleepDuration = 25;
-    remainingProc = 0;
+    sleepDuration = 10;
+    remainingProc = -1;
 
 }
 
@@ -67,7 +67,7 @@ void Simulator::processEvents()
         {
             switch (scheduleVisuals->algorithmInput(mousePos))
             {
-                case 1:
+                case FIFO + 1:
                     delete os;
                     os = new ProjectManagement(Factory::createAlgorithm(FIFO, CentralProcessor()));
                     os->printScheduler();
@@ -76,7 +76,7 @@ void Simulator::processEvents()
                     remainingProc = os->numProcesses();
                     algSelected = true;
                     break;
-                case 2:
+                case RR + 1:
                     delete os;
                     os = new ProjectManagement(Factory::createAlgorithm(RR, CentralProcessor()));
                     os->printScheduler();
@@ -85,7 +85,7 @@ void Simulator::processEvents()
                     remainingProc = os->numProcesses();
                     algSelected = true;
                     break;
-                case 3:
+                case SJN + 1:
                     delete os;
                     os = new ProjectManagement(Factory::createAlgorithm(SJN, CentralProcessor()));
                     os->printScheduler();
@@ -100,9 +100,6 @@ void Simulator::processEvents()
                     break;
             }
 
-            // add visuals for processes 
-            for (int i = 0; i < remainingProc; i++)
-                scheduleVisuals->addProcessRect();
         }
 
         // Use mouse position to implement selection menu to start, pause, and restart simulation
@@ -132,6 +129,20 @@ void Simulator::update()
 {
     if (remainingProc > 0)
     {
+        if (!visualsLoaded)
+        {
+            // add visuals for processes 
+            for (int i = 0; i < remainingProc; i++)
+                    scheduleVisuals->addProcessRect();
+
+            // set ids for visuals 
+            for(int i = 0; i < os->numProcesses(); i ++)
+                scheduleVisuals->initIDs(i, os->getProcessID(i));
+
+            std::cout << "Visuals finalized" << std::endl;
+            visualsLoaded = true;
+        }
+
         if ((start && !paused) && !finished)
         {
             ++time;
@@ -141,7 +152,7 @@ void Simulator::update()
             os->runStep(time);
 
             ProcessInProgress myProcess = os->getCurrentProcess();
-
+            
             if (myProcess.latestStep == COMPLETE)
                 remainingProc--;
 
@@ -167,16 +178,20 @@ void Simulator::update()
                     std::cout << "[*noAct*]\t";
                     break;
             }
+            scheduleVisuals->updateProcess(myProcess);
+
+
             os->printStates();
             std::this_thread::sleep_for(std::chrono::milliseconds(sleepDuration));
         }
     }
-    else if (finished && remainingProc == 0)
+    else if (remainingProc == 0)
     {
+        finished = true;
         os->printAllProcesses();
         remainingProc = -1;
     }
-    
+
 }
 
 
@@ -185,6 +200,19 @@ void Simulator::render()
     window->clear(sf::Color(105,105,105));
 
     scheduleVisuals->showTimeLine(*window);
+
+    if (finished)
+    {
+        sf::Font font;
+        font.loadFromFile("./Montserrat-Regular.ttf");
+
+        sf::Text endMsg = sf::Text("FINISHED", font, 72);
+        endMsg.setFillColor(sf::Color::Black);
+        endMsg.setOrigin(endMsg.getGlobalBounds().width / 2, 0);
+        endMsg.setPosition(windowSize. x / 2, 50.f);
+
+        window->draw(endMsg);
+    }
 
     window->display();
 }
